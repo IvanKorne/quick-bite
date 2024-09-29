@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 import cors from "cors";
 import "dotenv/config";
 import mongoose from "mongoose";
+import myUserRoute from "./routes/myUserRoute";
 
 mongoose
   .connect(process.env.MONGO_DB!)
@@ -10,12 +11,9 @@ mongoose
 const app = express();
 app.use(express.json());
 app.use(cors());
+const PORT = process.env.PORT || 3010;
 
-const PORT = 3010;
-
-app.get("/test", async (req: Request, res: Response) => {
-  res.json({ message: "Hello" });
-});
+app.use("/api/my/user", myUserRoute);
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);
