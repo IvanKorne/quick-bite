@@ -5,7 +5,7 @@ export const getCurrentUser = async (req: Request, res: Response) => {
   try {
     const currentUser = await User.findOne({ _id: req.userId });
     if (!currentUser) {
-      return res.status(404).json({ message: "User not found" });
+      return res.sendStatus(404);
     }
 
     res.json(currentUser);

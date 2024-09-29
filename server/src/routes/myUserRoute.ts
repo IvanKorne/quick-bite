@@ -8,8 +8,8 @@ import { jwtCheck, jwtParse } from "../middleware/auth";
 import { validateUserRequest } from "../middleware/validation";
 const router = express.Router();
 
+router.get("/", jwtCheck, jwtParse as any, getCurrentUser as any);
 router.post("/", jwtCheck, createCurrentUser as any);
-router.get("/", jwtCheck, getCurrentUser as any);
 router.put(
   "/",
   jwtCheck,

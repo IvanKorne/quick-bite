@@ -1,13 +1,14 @@
-import { useCreateUserRequest } from "@/api/myUserApi";
+import { useCreateUser } from "@/api/myUserApi";
+import CustomLoader from "@/components/CustomLoader";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Loader } from "lucide-react";
+
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
 const AuthCallbackPage = () => {
   const navigate = useNavigate();
   const { user } = useAuth0();
-  const { createUser } = useCreateUserRequest();
+  const { createUser } = useCreateUser();
 
   const hasCreatedUser = useRef(false);
 
@@ -19,12 +20,7 @@ const AuthCallbackPage = () => {
     navigate("/");
   }, [createUser, navigate, user]);
 
-  return (
-    <Loader
-      size={20}
-      className="flex items-center justify-center w-full h-screen animate-spin"
-    />
-  );
+  return <CustomLoader />;
 };
 
 export default AuthCallbackPage;
