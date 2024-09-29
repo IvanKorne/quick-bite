@@ -10,6 +10,7 @@ const handleValidatationErrors = async (
   if (!errors.isEmpty()) {
     return res.status(400).send({ errors: errors.array() });
   }
+  next();
 };
 
 export const validateUserRequest = [
