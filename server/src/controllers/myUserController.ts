@@ -3,7 +3,7 @@ import User from "../models/user";
 
 export const getCurrentUser = async (req: Request, res: Response) => {
   try {
-    const currentUser = await User.findOne({ _id: req.body });
+    const currentUser = await User.findOne({ _id: req.userId });
     if (!currentUser) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -31,5 +31,27 @@ export const createCurrentUser = async (req: Request, res: Response) => {
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: "Error creating user" });
+  }
+};
+
+export const updateCurrentUser = async (req: Request, res: Response) => {
+  try {
+    const { name, city, addressLine1, country } = req.body;
+    const user = await User.findById(req.userId);
+    if (!user) {
+      return res.sendStatus(404);
+    }
+
+    user.name = name;
+    user.city = city;
+    user.addressLine1 = addressLine1;
+    user.country = country;
+
+    await user.save();
+
+    res.status(200).send({ message: "Successfully updated user" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Error updating user" });
   }
 };
